@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Community Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <h1 class="topbar__title">Community</h1>
+    <p class="topbar__hint">Pick a user, then a post.</p>
+  </header>
+
+  <main class="dashboard">
+
+    <!-- A. USERS -->
+    <section class="panel panel--users" aria-labelledby="users-heading">
+      <div class="panel__head">
+        <h2 id="users-heading" class="panel__title">Users</h2>
+        <span class="badge" id="users-count">0</span>
+      </div>
+      <div class="panel__body">
+        <p class="state state--loading" id="users-loading">Loading users…</p>
+        <p class="state state--error" id="users-error" hidden>Could not load users. Check your connection and try again.</p>
+        <ul class="list" id="users-list"></ul>
+      </div>
+    </section>
+
+    <!-- B. POSTS -->
+    <section class="panel panel--posts" aria-labelledby="posts-heading">
+      <div class="panel__head">
+        <h2 id="posts-heading" class="panel__title">Posts</h2>
+        <span class="badge" id="posts-count">0</span>
+      </div>
+      <div class="panel__body">
+        <p class="state state--empty" id="posts-empty">Select a user to see their posts.</p>
+        <p class="state state--loading" id="posts-loading" hidden>Loading posts…</p>
+        <p class="state state--error" id="posts-error" hidden>Could not load posts. Try selecting the user again.</p>
+        <ul class="list" id="posts-list"></ul>
+      </div>
+    </section>
+
+    <!-- C. COMMENTS -->
+    <section class="panel panel--comments" aria-labelledby="comments-heading">
+      <div class="panel__head">
+        <h2 id="comments-heading" class="panel__title">Comments</h2>
+        <span class="badge" id="comments-count">0</span>
+      </div>
+      <div class="panel__body">
+        <p class="state state--empty" id="comments-empty">Select a post to read its comments.</p>
+        <p class="state state--loading" id="comments-loading" hidden>Loading comments…</p>
+        <p class="state state--error" id="comments-error" hidden>Could not load comments. Try selecting the post again.</p>
+        <ul class="list" id="comments-list"></ul>
+      </div>
+    </section>
+
+  </main>
+
+
+  <template id="user-template">
+    <li class="list__item">
+      <button class="user-card" type="button" data-user-id="">
+        <span class="avatar" data-field="initials"></span>
+        <span class="user-card__text">
+          <span class="user-card__name" data-field="name"></span>
+          <span class="user-card__username" data-field="username"></span>
+          <span class="user-card__email" data-field="email"></span>
+        </span>
+      </button>
+    </li>
+  </template>
+
+  <template id="post-template">
+    <li class="list__item">
+      <button class="post-card" type="button" data-post-id="">
+        <h3 class="post-card__title" data-field="title"></h3>
+        <p class="post-card__body" data-field="body"></p>
+      </button>
+    </li>
+  </template>
+
+  <template id="comment-template">
+    <li class="list__item">
+      <article class="comment">
+        <header class="comment__head">
+          <span class="avatar avatar--small" data-field="initials"></span>
+          <div>
+            <h3 class="comment__name" data-field="name"></h3>
+            <p class="comment__email" data-field="email"></p>
+          </div>
+        </header>
+        <p class="comment__body" data-field="body"></p>
+      </article>
+    </li>
+  </template>
+
+</body>
+</html>
