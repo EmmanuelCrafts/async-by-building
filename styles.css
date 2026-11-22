@@ -53,8 +53,8 @@ button { font: inherit; color: inherit; }
   background: var(--surface);
   border-bottom: 1px solid var(--line);
 }
-.topbar__title { font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.02em; }
-.topbar__hint { color: var(--ink-soft); font-size: var(--text-sm); }
+.topbar-title { font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.02em; }
+.topbar-hint { color: var(--ink-soft); font-size: var(--text-sm); }
 
 /* ---------- Layout ---------- */
 .dashboard {
@@ -75,16 +75,16 @@ button { font: inherit; color: inherit; }
   overflow: hidden;
 }
 
-.panel__head {
+.panel-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.875rem 1rem;
   border-bottom: 1px solid var(--line);
 }
-.panel__title { font-size: var(--text-lg); font-weight: 600; }
+.panel-title { font-size: var(--text-lg); font-weight: 600; }
 
-.panel__body {
+.panel-body {
   flex: 1;
   overflow-y: auto;
   padding: 0.75rem;
@@ -110,7 +110,7 @@ button { font: inherit; color: inherit; }
   font-size: var(--text-sm);
   color: var(--ink-soft);
 }
-.state--error { color: var(--danger); }
+.state-error { color: var(--danger); }
 
 /* ---------- Avatar ---------- */
 .avatar {
@@ -125,7 +125,7 @@ button { font: inherit; color: inherit; }
   background: var(--accent-soft);
   border-radius: 50%;
 }
-.avatar--small { width: 2rem; height: 2rem; font-size: 0.75rem; }
+.avatar-small { width: 2rem; height: 2rem; font-size: 0.75rem; }
 
 /* ---------- User card ---------- */
 .user-card,
@@ -147,10 +147,10 @@ button { font: inherit; color: inherit; }
   gap: 0.75rem;
   padding: 0.75rem;
 }
-.user-card__text { display: flex; flex-direction: column; min-width: 0; }
-.user-card__name { font-weight: 600; }
-.user-card__username { font-size: var(--text-sm); color: var(--accent); }
-.user-card__email {
+.user-card-text { display: flex; flex-direction: column; min-width: 0; }
+.user-card-name { font-weight: 600; }
+.user-card-username { font-size: var(--text-sm); color: var(--accent); }
+.user-card-email {
   font-size: var(--text-sm);
   color: var(--ink-soft);
   overflow: hidden;
@@ -160,13 +160,13 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Post card ---------- */
 .post-card { padding: 0.875rem 1rem; }
-.post-card__title {
+.post-card-title {
   margin-bottom: 0.25rem;
   font-size: var(--text-base);
   font-weight: 600;
   text-transform: capitalize;
 }
-.post-card__body {
+.post-card-body {
   color: var(--ink-soft);
   font-size: var(--text-sm);
   max-width: 70ch;
@@ -185,10 +185,10 @@ button { font: inherit; color: inherit; }
   background: var(--surface-alt);
   border-radius: var(--radius-sm);
 }
-.comment__head { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.5rem; }
-.comment__name { font-size: var(--text-sm); font-weight: 600; text-transform: capitalize; }
-.comment__email { font-size: 0.75rem; color: var(--ink-soft); }
-.comment__body { font-size: var(--text-sm); }
+.comment-head { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.5rem; }
+.comment-name { font-size: var(--text-sm); font-weight: 600; text-transform: capitalize; }
+.comment-email { font-size: 0.75rem; color: var(--ink-soft); }
+.comment-body { font-size: var(--text-sm); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
@@ -196,15 +196,15 @@ button { font: inherit; color: inherit; }
     grid-template-columns: 280px minmax(0, 1fr);
     height: auto;
   }
-  .panel--users { grid-row: span 2; max-height: calc(100vh - 110px); }
-  .panel--posts,
-  .panel--comments { max-height: 50vh; }
+  .panel-users { grid-row: span 2; max-height: calc(100vh - 110px); }
+  .panel-posts,
+  .panel-comments { max-height: 50vh; }
 }
 
 @media (max-width: 720px) {
   .topbar { flex-direction: column; gap: 0.25rem; padding: 1rem; }
   .dashboard { grid-template-columns: 1fr; padding: 0.75rem; }
-  .panel--users { grid-row: auto; max-height: 45vh; }
-  .panel--posts,
-  .panel--comments { max-height: 55vh; }
+  .panel-users { grid-row: auto; max-height: 45vh; }
+  .panel-posts,
+  .panel-comments { max-height: 55vh; }
 }
