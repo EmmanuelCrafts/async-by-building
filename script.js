@@ -23,13 +23,29 @@ const userTemplate = document.querySelector("#user-template");
 const postTemplate = document.querySelector("#post-template");
 const commentTemplate = document.querySelector("#comment-template");
 
-const clone = userTemplate.content.cloneNode(true);
+// ---------- User template ----------
+const userClone = userTemplate.content.cloneNode(true);
 
-const button = clone.querySelector(".user-card");
-const name = clone.querySelector('[data-field="name"]');
-const username = clone.querySelector('[data-field="username"]');
-const email = clone.querySelector('[data-field="email"]');
-const initials = clone.querySelector('[data-field="initials"]');
+const userButton = userClone.querySelector(".user-card");
+const userName = userClone.querySelector('[data-field="name"]');
+const userUsername = userClone.querySelector('[data-field="username"]');
+const userEmail = userClone.querySelector('[data-field="email"]');
+const userInitials = userClone.querySelector('[data-field="initials"]');
+
+// ---------- Post template ----------
+const postClone = postTemplate.content.cloneNode(true);
+
+const postButton = postClone.querySelector(".post-card");
+const postTitle = postClone.querySelector('[data-field="title"]');
+const postBody = postClone.querySelector('[data-field="body"]');
+
+// ---------- Comment template ----------
+const commentClone = commentTemplate.content.cloneNode(true);
+
+const commentInitials = commentClone.querySelector('[data-field="initials"]');
+const commentName = commentClone.querySelector('[data-field="name"]');
+const commentEmail = commentClone.querySelector('[data-field="email"]');
+const commentBody = commentClone.querySelector('[data-field="body"]');
 
 // endpoints
 const usersEndpoint = "https://jsonplaceholder.typicode.com/users";
@@ -37,24 +53,48 @@ const postsEndpoint = "https://jsonplaceholder.typicode.com/posts?userId=";
 const commentsEndpoint = "https://jsonplaceholder.typicode.com/comments?postId=";
 // usage: postsEndpoint + userId
 
-let users = [];
 
 function fetchUsers() {
     return fetch (usersEndpoint)
             .then(response => {
-                console.log(response);
-
-                if(!response.ok) throw new Error("Something went wrong!")
-                    return response.json();
+                if(!response.ok) throw new Error("Failed to fetch users");
+                return response.json();
             })
 }
 
 fetchUsers()
     .then(data => {
-        console.log(data);
-        users = data;
-        usersCount.textContent = data.length;
+        console.log(data)
+        renderUsers(data);
     })
     .catch(error => {
         console.log(error);
     })  
+
+function renderUsers(users) {
+    users.forEach(user => {
+        usersList.appendChild(createUserItem(user));
+    });
+}
+
+function createUserItem(user) {
+  const clone = userTemplate.content.cloneNode(true);
+
+  const button = clone.querySelector(".user-card");
+  const name = clone.querySelector('[data-field="name"]');
+  const username = clone.querySelector('[data-field="username"]');
+  const email = clone.querySelector('[data-field="email"]');
+  const initials = clone.querySelector('[data-field="initials"]');
+
+  button.dataset.userId = user.id;
+  name.textContent = user.name;
+  username.textContent = `@${user.username}`;
+  email.textContent = user.email;
+  initials.textContent = user.name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2);
+
+  return clone;
+}
