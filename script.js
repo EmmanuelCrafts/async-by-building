@@ -23,14 +23,10 @@ const userTemplate = document.querySelector("#user-template");
 const postTemplate = document.querySelector("#post-template");
 const commentTemplate = document.querySelector("#comment-template");
 
-
-
-
 // endpoints
 const usersEndpoint = "https://jsonplaceholder.typicode.com/users";
 const postsEndpoint = "https://jsonplaceholder.typicode.com/posts?userId=";
 const commentsEndpoint = "https://jsonplaceholder.typicode.com/comments?postId=";
-// usage: postsEndpoint + userId
 
 
 usersList.addEventListener('click', (e) => {
@@ -43,7 +39,7 @@ usersList.addEventListener('click', (e) => {
 
     fetchPosts(userId)
         .then(data => {
-            console.log(data);
+            postsCount.textContent = data.length;
             renderPosts(data);
         })
         .catch(error => {
@@ -60,7 +56,7 @@ postsList.addEventListener('click', (e) => {
 
     fetchComments(postId)
         .then(data => {
-            console.log(data);
+            commentsCount.textContent = data.length;
             renderComments(data);
         })
         .catch(error => {
@@ -78,10 +74,14 @@ function fetchUsers() {
 
 fetchUsers()
     .then(data => {
+        usersCount.textContent = data.length;
         renderUsers(data);
     })
     .catch(error => {
         console.log(error);
+    })
+    .finally(() => {
+        usersLoading.classList.add("hidden");
     })  
 
 function fetchPosts(userId) {

@@ -190,6 +190,9 @@ button { font: inherit; color: inherit; }
 .comment-email { font-size: 0.75rem; color: var(--ink-soft); }
 .comment-body { font-size: var(--text-sm); }
 
+
+.hidden { display: none; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .dashboard {
