@@ -23,29 +23,8 @@ const userTemplate = document.querySelector("#user-template");
 const postTemplate = document.querySelector("#post-template");
 const commentTemplate = document.querySelector("#comment-template");
 
-// ---------- User template ----------
-const userClone = userTemplate.content.cloneNode(true);
 
-const userButton = userClone.querySelector(".user-card");
-const userName = userClone.querySelector('[data-field="name"]');
-const userUsername = userClone.querySelector('[data-field="username"]');
-const userEmail = userClone.querySelector('[data-field="email"]');
-const userInitials = userClone.querySelector('[data-field="initials"]');
 
-// ---------- Post template ----------
-const postClone = postTemplate.content.cloneNode(true);
-
-const postButton = postClone.querySelector(".post-card");
-const postTitle = postClone.querySelector('[data-field="title"]');
-const postBody = postClone.querySelector('[data-field="body"]');
-
-// ---------- Comment template ----------
-const commentClone = commentTemplate.content.cloneNode(true);
-
-const commentInitials = commentClone.querySelector('[data-field="initials"]');
-const commentName = commentClone.querySelector('[data-field="name"]');
-const commentEmail = commentClone.querySelector('[data-field="email"]');
-const commentBody = commentClone.querySelector('[data-field="body"]');
 
 // endpoints
 const usersEndpoint = "https://jsonplaceholder.typicode.com/users";
@@ -53,6 +32,41 @@ const postsEndpoint = "https://jsonplaceholder.typicode.com/posts?userId=";
 const commentsEndpoint = "https://jsonplaceholder.typicode.com/comments?postId=";
 // usage: postsEndpoint + userId
 
+
+usersList.addEventListener('click', (e) => {
+    const userCard = e.target.closest(".user-card");
+    if(!userCard) return;
+
+    const userId = userCard.dataset.userId;
+    postsList.innerHTML = "";
+    commentsList.innerHTML = "";
+
+    fetchPosts(userId)
+        .then(data => {
+            console.log(data);
+            renderPosts(data);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+})
+
+postsList.addEventListener('click', (e) => {
+    const postCard = e.target.closest(".post-card");
+    if(!postCard) return;
+
+    const postId = postCard.dataset.postId;
+    commentsList.innerHTML = "";
+
+    fetchComments(postId)
+        .then(data => {
+            console.log(data);
+            renderComments(data);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+})
 
 function fetchUsers() {
     return fetch (usersEndpoint)
@@ -64,16 +78,43 @@ function fetchUsers() {
 
 fetchUsers()
     .then(data => {
-        console.log(data)
         renderUsers(data);
     })
     .catch(error => {
         console.log(error);
     })  
 
+function fetchPosts(userId) {
+    return fetch(postsEndpoint + userId)
+        .then(response => {
+            if(!response.ok) throw new Error("Failed to fetch posts");
+            return response.json();
+        })
+}
+
+function fetchComments(postId) {
+    return fetch(commentsEndpoint + postId)
+        .then(response => {
+            if(!response.ok) throw new Error("Failed to fetch comments");
+            return response.json();
+        })
+}
+
 function renderUsers(users) {
     users.forEach(user => {
         usersList.appendChild(createUserItem(user));
+    });
+}
+
+function renderPosts(posts) {
+    posts.forEach(post => {
+        postsList.appendChild(createUserPost(post));
+    });
+}
+
+function renderComments(comments) {
+    comments.forEach(comment => {
+        commentsList.appendChild(createPostComment(comment));
     });
 }
 
@@ -97,4 +138,38 @@ function createUserItem(user) {
     .slice(0, 2);
 
   return clone;
+}
+
+function createUserPost(post) {
+    const clone = postTemplate.content.cloneNode(true);
+
+    const button = clone.querySelector(".post-card");
+    const title = clone.querySelector('[data-field="title"]');
+    const body = clone.querySelector('[data-field="body"]');
+
+    button.dataset.postId = post.id;
+    title.textContent = post.title;
+    body.textContent = post.body;
+
+    return clone;
+}
+
+function createPostComment(comment) {
+    const clone = commentTemplate.content.cloneNode(true);
+
+    const initials = clone.querySelector('[data-field="initials"]');
+    const name = clone.querySelector('[data-field="name"]');
+    const email = clone.querySelector('[data-field="email"]');
+    const body = clone.querySelector('[data-field="body"]');
+
+    initials.textContent = comment.name
+        .split(" ")
+        .map((word) => word[0])
+        .join("")
+        .slice(0, 2);
+    name.textContent = comment.name;
+    email.textContent = comment.email;
+    body.textContent = comment.body;
+
+    return clone;
 }
