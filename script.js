@@ -44,6 +44,10 @@ usersList.addEventListener('click', (e) => {
         })
         .catch(error => {
             console.log(error);
+            postsError.hidden = false;
+        })
+        .finally(() => {
+            postsEmpty.hidden = true;
         })
 })
 
@@ -61,6 +65,10 @@ postsList.addEventListener('click', (e) => {
         })
         .catch(error => {
             console.log(error);
+            commentsError.hidden = false;
+        })
+        .finally(() => {
+            commentsEmpty.hidden = true;
         })
 })
 
@@ -79,9 +87,10 @@ fetchUsers()
     })
     .catch(error => {
         console.log(error);
+        usersError.hidden = false;
     })
     .finally(() => {
-        usersLoading.classList.add("hidden");
+        usersLoading.hidden = true;
     })  
 
 function fetchPosts(userId) {

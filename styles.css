@@ -191,8 +191,6 @@ button { font: inherit; color: inherit; }
 .comment-body { font-size: var(--text-sm); }
 
 
-.hidden { display: none; }
-
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .dashboard {
