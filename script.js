@@ -36,6 +36,16 @@ usersList.addEventListener('click', (e) => {
     const userId = userCard.dataset.userId;
     postsList.innerHTML = "";
     commentsList.innerHTML = "";
+    
+    commentsCount.textContent = 0;
+    commentsEmpty.hidden = false;
+    commentsError.hidden = true;
+    commentsLoading.hidden = true;
+
+    postsEmpty.hidden = true;
+    postsError.hidden = true;
+    postsLoading.hidden = false;
+
 
     fetchPosts(userId)
         .then(data => {
@@ -47,9 +57,10 @@ usersList.addEventListener('click', (e) => {
             postsError.hidden = false;
         })
         .finally(() => {
-            postsEmpty.hidden = true;
+            postsLoading.hidden = true;
         })
 })
+
 
 postsList.addEventListener('click', (e) => {
     const postCard = e.target.closest(".post-card");
@@ -57,6 +68,11 @@ postsList.addEventListener('click', (e) => {
 
     const postId = postCard.dataset.postId;
     commentsList.innerHTML = "";
+    commentsCount.textContent = 0;
+
+    commentsEmpty.hidden = true;
+    commentsError.hidden = true;
+    commentsLoading.hidden = false;
 
     fetchComments(postId)
         .then(data => {
@@ -68,7 +84,7 @@ postsList.addEventListener('click', (e) => {
             commentsError.hidden = false;
         })
         .finally(() => {
-            commentsEmpty.hidden = true;
+            commentsLoading.hidden = true;
         })
 })
 
